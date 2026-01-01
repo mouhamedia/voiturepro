@@ -1,0 +1,129 @@
+🎯 GUIDE RAPIDE - NAVIGATION ADMIN
+===================================
+
+1. ACCÈS AU TABLEAU DE BORD
+   ▶ URL: /dashboard
+   ▶ Ou cliquez sur "Tableau de Bord" dans la sidebar
+
+2. NAVIGATION PRINCIPALE
+   ━━━━━━━━━━━━━━━━━━━━
+   
+   📊 TABLEAU DE BORD
+   └─ Aperçu général, stats, actions rapides
+   
+   🚗 VOITURES
+   ├─ Liste complète des voitures
+   ├─ Voir/Modifier/Supprimer
+   └─ Marquer comme vendues
+   
+   ➕ AJOUTER VOITURE
+   └─ Formulaire pour ajouter un nouveau véhicule
+   
+   📈 VENTES
+   └─ Historique de toutes les ventes
+   
+   🏠 ACCUEIL (Public)
+   └─ Retour au site public
+   
+   📋 CATALOGUE (Public)
+   └─ Voir les voitures disponibles
+   
+   ✓ VENDUS (Public)
+   └─ Voir les voitures vendues
+
+3. BOUTONS UTILES
+   ═════════════════
+   
+   ◄ RETOUR
+   └─ Flèche en haut à droite
+   └─ Revient à la page précédente
+   
+   🔴 DÉCONNEXION
+   ├─ Icône power-off en rouge
+   ├─ Haut à droite de la navbar
+   └─ Demande confirmation avant de déconnecter
+
+4. STATUS DES VOITURES
+   ════════════════════
+   
+   🟢 DISPONIBLE (vert)
+   └─ La voiture peut être vendue
+   
+   🔴 VENDUE (rouge)
+   └─ La voiture a été vendue
+
+5. ACTIONS SUR LES VOITURES
+   ═════════════════════════
+   
+   ✏️ MODIFIER
+   └─ Cliquez sur l'icône édition
+   
+   ✓ MARQUER COMME VENDUE
+   └─ Cliquez sur le cercle vert
+   
+   🗑️ SUPPRIMER
+   └─ Cliquez sur la poubelle (demande confirmation)
+
+6. FORMULAIRE VOITURE (Création/Modification)
+   ═══════════════════════════════════════════
+   
+   Champs obligatoires :
+   • Marque et Modèle
+   • Année
+   • Kilométrage
+   • Prix
+   • Carburant
+   • Transmission
+   • Couleur
+   • Image
+   
+   Champs optionnels :
+   • Description
+
+7. TABLEAU DES VENTES
+   ═══════════════════
+   
+   Affiche :
+   • Véhicule vendu
+   • Client et contact
+   • Prix de vente
+   • Date et heure
+   • Statut (Confirmée/En attente)
+   
+   Total encaissé en haut
+
+8. RESPONSIVE MOBILE
+   ═════════════════
+   
+   Cliquez sur ☰ pour ouvrir le menu
+   Cliquez sur un lien pour fermer automatiquement
+   Tous les boutons restent accessibles
+
+9. RACCOURCIS KEYBOARD (Si activés)
+   ════════════════════════════════
+   
+   (À venir dans les améliorations)
+
+10. DÉPANNAGE
+    ═════════
+    
+    Q: Je ne vois pas la sidebar
+    R: Vous êtes sur mobile ? Cliquez sur ☰
+    
+    Q: Où est le bouton retour ?
+    R: En haut à droite, flèche gauche ◄
+    
+    Q: Comment je me déconnecte ?
+    R: Bouton power-off 🔴 en haut à droite
+    
+    Q: Je veux modifier une voiture
+    R: Voiture → Cliquez sur ✏️ édition
+    
+    Q: Où sont les statistiques ?
+    R: Tableau de Bord affiche tout
+
+────────────────────────────────────────────────────
+Version: 1.0
+Dernière mise à jour: 30 Décembre 2025
+Support: Documenté dans ADMIN_ACCESSIBILITY.md
+────────────────────────────────────────────────────
