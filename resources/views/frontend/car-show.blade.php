@@ -27,7 +27,39 @@
         transform: translateY(-2px);
     }
 
-    /* --- Grille Responsive --- */
+    /* --- Grille des Modèles Similaires (Correction superposition) --- */
+    .cars-grid-related {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 2.5rem;
+    }
+
+    /* Styles obligatoires pour le composant car-card */
+    .car-card {
+        background: white;
+        border-radius: 1.5rem;
+        overflow: hidden;
+        border: 1px solid #f1f1ee;
+        transition: all 0.4s ease;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    }
+
+    .image-wrapper { 
+        position: relative; 
+        height: 250px; 
+        overflow: hidden; 
+    }
+    
+    .image-wrapper img { 
+        width: 100%; 
+        height: 100%; 
+        object-fit: cover; 
+    }
+
+    /* --- Grille Détails --- */
     .detail-grid {
         display: grid;
         grid-template-columns: 1fr;
@@ -139,19 +171,19 @@
                     <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2.5rem;">
                         <div class="spec-card">
                             <span style="font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px;">Année</span>
-                            <span style="font-weight: 900; color: var(--brand-dark); font-size: 1.1rem;">{{ $car->annee }}</span>
+                            <span style="font-weight: 900; color: var(--brand-dark); font-size: 1.1rem; display: block;">{{ $car->annee }}</span>
                         </div>
                         <div class="spec-card">
                             <span style="font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px;">Kilométrage</span>
-                            <span style="font-weight: 900; color: var(--brand-dark); font-size: 1.1rem;">{{ number_format($car->kilometrage, 0, ',', ' ') }} km</span>
+                            <span style="font-weight: 900; color: var(--brand-dark); font-size: 1.1rem; display: block;">{{ number_format($car->kilometrage, 0, ',', ' ') }} km</span>
                         </div>
                         <div class="spec-card">
                             <span style="font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px;">Carburant</span>
-                            <span style="font-weight: 900; color: var(--brand-dark); font-size: 1.1rem;">{{ $car->carburant }}</span>
+                            <span style="font-weight: 900; color: var(--brand-dark); font-size: 1.1rem; display: block;">{{ $car->carburant }}</span>
                         </div>
                         <div class="spec-card">
                             <span style="font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px;">Boîte</span>
-                            <span style="font-weight: 900; color: var(--brand-dark); font-size: 1.1rem;">{{ $car->boite }}</span>
+                            <span style="font-weight: 900; color: var(--brand-dark); font-size: 1.1rem; display: block;">{{ $car->boite }}</span>
                         </div>
                     </div>
 
@@ -195,7 +227,7 @@
                             ->get();
             @endphp
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+            <div class="cars-grid-related">
                 @forelse($related as $rel)
                     @include('partials.car-card', ['car' => $rel]) 
                 @empty
