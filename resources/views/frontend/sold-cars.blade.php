@@ -4,173 +4,209 @@
 
 @section('extra-css')
 <style>
-    /* --- Grille Responsive --- */
+    :root { 
+        --brand-success: #10b981; /* Vert émeraude plus moderne */
+        --brand-dark: #0f172a;    /* Bleu-noir plus profond */
+        --brand-light: #f8fafc;
+    }
+
+    /* --- Animations Fluides --- */
+    @keyframes reveal {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-reveal { animation: reveal 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+
+    /* --- Header & Container --- */
+    .hero-sold {
+        background: radial-gradient(circle at top right, #1e293b, var(--brand-dark));
+        position: relative;
+        overflow: hidden;
+    }
+    .hero-sold::after {
+        content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+        background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+        opacity: 0.05;
+    }
+
+    .container-custom { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* --- Cartes "Collection" --- */
     .sold-grid {
         display: grid;
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
         gap: 2rem;
     }
-    @media (min-width: 640px) { .sold-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (min-width: 1024px) { .sold-grid { grid-template-columns: repeat(3, 1fr); } }
 
-    /* --- Style des Cartes Vendues --- */
     .sold-card {
         background: white;
-        border-radius: 1rem;
-        overflow: hidden;
-        border: 1px solid #e3e3e0;
-        transition: all 0.4s ease;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
+        border-radius: 1.5rem;
+        border: 1px solid #f1f5f9;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
     }
 
     .sold-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 30px rgba(39, 174, 96, 0.15);
-        border-color: #27AE60;
+        transform: translateY(-10px);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+        border-color: #e2e8f0;
     }
 
-    /* Effet visuel sur les images vendues */
-    .sold-img-container {
-        position: relative;
-        height: 250px;
+    /* Badge Vendu Signature */
+    .sold-badge {
+        position: absolute;
+        top: 1.25rem;
+        right: 1.25rem;
+        z-index: 2;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(4px);
+        color: var(--brand-dark);
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-weight: 800;
+        font-size: 0.7rem;
+        letter-spacing: 1px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .sold-img-wrapper {
+        height: 240px;
+        border-radius: 1.5rem 1.5rem 0 0;
         overflow: hidden;
     }
-    
-    .sold-img-container img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        filter: grayscale(40%); /* Un peu plus gris pour le côté "archive" */
-        transition: 0.5s ease;
+    .sold-img-wrapper img {
+        width: 100%; height: 100%; object-fit: cover;
+        transition: transform 1s ease;
+    }
+    .sold-card:hover .sold-img-wrapper img {
+        transform: scale(1.1);
     }
 
-    .sold-card:hover img {
-        filter: grayscale(0%);
-        transform: scale(1.05);
+    /* --- Stats Flottantes --- */
+    .stats-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 1.25rem;
+        box-shadow: 0 10px 30px -5px rgba(0,0,0,0.05);
+        text-align: center;
+        transition: 0.3s;
     }
+    .stats-card:hover { transform: scale(1.05); }
 
-    /* Animations */
-    @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-up { animation: fadeInUp 0.6s ease-out forwards; }
 </style>
 @endsection
 
 @section('content')
-    <section style="background: linear-gradient(135deg, #1e7d46 0%, #27AE60 100%); color: white; padding: 5rem 1.5rem; text-align: center;">
-        <div class="container">
-            <div class="animate-up">
-                <span style="background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(4px); color: white; padding: 0.5rem 1.5rem; border-radius: 3rem; font-size: 0.85rem; font-weight: 700; display: inline-block; margin-bottom: 1.5rem; text-transform: uppercase;">
-                    <i class="fas fa-handshake" style="margin-right: 0.5rem;"></i> Confiance & Satisfaction
-                </span>
-                <h1 style="font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 800; margin-bottom: 1rem; letter-spacing: -1px;">
-                    Histoires de Succès
+    <section class="hero-sold" style="padding: 6rem 0 8rem; text-align: center; color: white;">
+        <div class="container-custom">
+            <div class="animate-reveal">
+                <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 6px 16px; border-radius: 100px; margin-bottom: 2rem;">
+                    <span style="width: 8px; height: 8px; background: var(--brand-success); border-radius: 50%; display: inline-block;"></span>
+                    <span style="font-size: 0.75rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;">Excellence Reconnue</span>
+                </div>
+                <h1 style="font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 900; letter-spacing: -2px; line-height: 1; margin-bottom: 1.5rem;">
+                    Ils nous ont fait <span style="color: var(--brand-success)">confiance.</span>
                 </h1>
-                <p style="font-size: 1.2rem; opacity: 0.9; max-width: 750px; margin: 0 auto; line-height: 1.6;">
-                    Plus de <strong>{{ $sold_cars->total() }} véhicules</strong> ont déjà trouvé preneur. 
-                    Découvrez les modèles qui font le bonheur de nos clients.
+                <p style="font-size: 1.25rem; color: #94a3b8; max-width: 700px; margin: 0 auto; line-height: 1.6;">
+                    Explorez notre galerie de ventes réussies. Chaque véhicule raconte une histoire de passion et de qualité sans compromis.
                 </p>
             </div>
         </div>
     </section>
 
-    <div class="container" style="margin-top: -4rem; position: relative; z-index: 10;">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1.5rem; margin-bottom: 4rem;">
+    <div class="container-custom" style="margin-top: -4rem; position: relative; z-index: 5;">
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; @media (min-width: 768px) { grid-template-columns: repeat(4, 1fr); gap: 2rem; }">
             @php $stats = [
-                ['val' => $sold_cars->total(), 'lab' => 'Ventes Réussies', 'col' => '#27AE60', 'icon' => 'fa-check-double'],
-                ['val' => '100%', 'lab' => 'Satisfaction', 'col' => '#f59e0b', 'icon' => 'fa-smile'],
-                ['val' => '4.9/5', 'lab' => 'Avis Clients', 'col' => '#3b82f6', 'icon' => 'fa-star'],
-                ['val' => 'Rapide', 'lab' => 'Délai Vente', 'col' => '#a855f7', 'icon' => 'fa-bolt']
+                ['val' => $sold_cars->total(), 'lab' => 'Ventes', 'icon' => 'fa-check', 'color' => '#10b981'],
+                ['val' => '100%', 'lab' => 'Qualité', 'icon' => 'fa-shield-alt', 'color' => '#f59e0b'],
+                ['val' => '4.9/5', 'lab' => 'Avis', 'icon' => 'fa-star', 'color' => '#3b82f6'],
+                ['val' => '< 48h', 'lab' => 'Rapidité', 'icon' => 'fa-bolt', 'color' => '#a855f7']
             ]; @endphp
             @foreach($stats as $stat)
-                <div class="animate-up" style="background: white; padding: 1.5rem; border-radius: 1rem; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border-bottom: 4px solid {{ $stat['col'] }};">
-                    <i class="fas {{ $stat['icon'] }}" style="color: {{ $stat['col'] }}; margin-bottom: 0.75rem; font-size: 1.2rem;"></i>
-                    <div style="font-size: 1.8rem; font-weight: 800; color: #1b1b18;">{{ $stat['val'] }}</div>
-                    <p style="color: #706f6c; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; margin: 0;">{{ $stat['lab'] }}</p>
+                <div class="stats-card animate-reveal">
+                    <div style="width: 40px; height: 40px; background: {{ $stat['color'] }}15; color: {{ $stat['color'] }}; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                        <i class="fas {{ $stat['icon'] }}"></i>
+                    </div>
+                    <div style="font-size: 1.75rem; font-weight: 900; color: var(--brand-dark);">{{ $stat['val'] }}</div>
+                    <p style="font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase; margin-top: 4px;">{{ $stat['lab'] }}</p>
                 </div>
             @endforeach
         </div>
-
-        @if($sold_cars->count() > 0)
-            <div class="sold-grid">
-                @foreach($sold_cars as $index => $car)
-                    <div class="sold-card animate-up" style="animation-delay: {{ $index * 0.1 }}s">
-                        <div class="sold-img-container">
-                            @php
-                                $primaryImage = $car->images->where('is_primary', true)->first() ?? $car->images->first();
-                                $imagePath = $primaryImage ? $primaryImage->image_path : $car->image;
-                            @endphp
-                            
-                            @if($imagePath)
-                                <img src="{{ asset('storage/' . $imagePath) }}" alt="{{ $car->marque }}">
-                            @else
-                                <div style="height: 100%; display: flex; align-items: center; justify-content: center; background: #f0f0f0; color: #ccc;">
-                                    <i class="fas fa-car fa-4x"></i>
-                                </div>
-                            @endif
-
-                            <div style="position: absolute; top: 1rem; right: 1rem; background: rgba(39, 174, 96, 0.9); color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; font-weight: 800; font-size: 0.8rem; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
-                                <i class="fas fa-lock" style="margin-right: 0.4rem;"></i> VENDU
-                            </div>
-                        </div>
-
-                        <div style="padding: 1.5rem; flex-grow: 1;">
-                            <h3 style="font-size: 1.25rem; font-weight: 800; color: #1b1b18; margin-bottom: 0.5rem;">
-                                {{ $car->marque }} <span style="color: #27AE60;">{{ $car->modele }}</span>
-                            </h3>
-                            <div style="font-size: 1.1rem; font-weight: 700; color: #706f6c; margin-bottom: 1.5rem;">
-                                @xof($car->prix)
-                            </div>
-
-                            <div style="display: flex; gap: 1rem; border-top: 1px solid #eee; padding-top: 1rem; margin-bottom: 1.5rem;">
-                                <div style="font-size: 0.85rem; color: #706f6c;">
-                                    <i class="fas fa-calendar-alt" style="color: #27AE60;"></i> {{ $car->annee }}
-                                </div>
-                                <div style="font-size: 0.85rem; color: #706f6c;">
-                                    <i class="fas fa-tachometer-alt" style="color: #27AE60;"></i> {{ number_format($car->kilometrage, 0, ',', ' ') }} km
-                                </div>
-                            </div>
-
-                            <div style="background: #f0fdf4; border: 1px dashed #27AE60; border-radius: 0.75rem; padding: 0.75rem; display: flex; align-items: center; gap: 0.75rem;">
-                                <div style="width: 35px; height: 35px; background: #27AE60; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white;">
-                                    <i class="fas fa-check" style="font-size: 0.8rem;"></i>
-                                </div>
-                                <div style="font-size: 0.85rem; font-weight: 700; color: #1e7d46;">
-                                    Propriétaire satisfait
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-
-            <div style="margin-top: 4rem; display: flex; justify-content: center;">
-                {{ $sold_cars->links() }}
-            </div>
-        @else
-            <div style="text-align: center; padding: 5rem 0;">
-                <h3 style="color: #706f6c;">Aucun historique de vente disponible.</h3>
-            </div>
-        @endif
     </div>
 
-    <section style="background: #1b1b18; color: white; padding: 5rem 1.5rem; margin-top: 5rem; text-align: center;">
-        <div class="container animate-up">
-            <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1.5rem;">Prêt à être notre prochain succès ?</h2>
-            <p style="font-size: 1.2rem; opacity: 0.8; max-width: 600px; margin: 0 auto 2.5rem;">
-                Parcourez notre stock actuel et trouvez la voiture qui vous correspond.
-            </p>
-            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                <a href="/cars" class="btn btn-primary" style="background: #27AE60; border: none; padding: 1.2rem 3rem; font-weight: 700; border-radius: 0.75rem; color: white; text-decoration: none;">
-                    Voir le Catalogue Actuel
-                </a>
-                <a href="/contact" class="btn" style="border: 2px solid white; color: white; padding: 1.2rem 3rem; font-weight: 700; border-radius: 0.75rem; text-decoration: none;">
-                    Nous Contacter
-                </a>
+    <section style="padding: 6rem 0; background: #fafafa;">
+        <div class="container-custom">
+            @if($sold_cars->count() > 0)
+                <div class="sold-grid">
+                    @foreach($sold_cars as $index => $car)
+                        <div class="sold-card animate-reveal" style="animation-delay: {{ $index * 0.1 }}s">
+                            <div class="sold-badge">VENDU PAR VOITUREPRO</div>
+                            
+                            <div class="sold-img-wrapper">
+                                @php
+                                    $primaryImage = $car->images->where('is_primary', true)->first() ?? $car->images->first();
+                                    $imagePath = $primaryImage ? $primaryImage->image_path : 'cars/default.jpg';
+                                @endphp
+                                <img src="{{ asset('storage/' . $imagePath) }}" alt="{{ $car->marque }}">
+                            </div>
+
+                            <div style="padding: 2rem;">
+                                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                                    <div>
+                                        <h3 style="font-size: 1.4rem; font-weight: 900; color: var(--brand-dark); margin: 0;">{{ $car->marque }}</h3>
+                                        <p style="color: var(--brand-success); font-weight: 700; margin: 0;">{{ $car->modele }}</p>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <div style="font-size: 0.7rem; color: #94a3b8; font-weight: 700; text-transform: uppercase;">Prix de vente</div>
+                                        <div style="font-size: 1.1rem; font-weight: 800; color: var(--brand-dark);">@xof($car->prix)</div>
+                                    </div>
+                                </div>
+
+                                <div style="display: flex; gap: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #f1f5f9;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <i class="fas fa-calendar-day" style="color: #cbd5e1;"></i>
+                                        <span style="font-size: 0.85rem; font-weight: 600; color: #64748b;">{{ $car->annee }}</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <i class="fas fa-tachometer-alt" style="color: #cbd5e1;"></i>
+                                        <span style="font-size: 0.85rem; font-weight: 600; color: #64748b;">{{ number_format($car->kilometrage, 0, ',', ' ') }} km</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+                <div style="margin-top: 5rem; display: flex; justify-content: center;">
+                    {{ $sold_cars->links() }}
+                </div>
+            @else
+                <div style="text-align: center; padding: 10rem 0;">
+                    <div style="background: white; width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; box-shadow: 0 10px 20px rgba(0,0,0,0.05);">
+                        <i class="fas fa-camera-retro fa-2x" style="color: #e2e8f0;"></i>
+                    </div>
+                    <p style="color: #94a3b8; font-size: 1.1rem; font-weight: 500;">Notre galerie est en cours de préparation.</p>
+                </div>
+            @endif
+        </div>
+    </section>
+
+    <section style="background: white; padding: 6rem 0;">
+        <div class="container-custom">
+            <div style="background: var(--brand-dark); border-radius: 2.5rem; padding: 4rem 2rem; text-align: center; position: relative; overflow: hidden;">
+                <div style="position: relative; z-index: 2;">
+                    <h2 style="color: white; font-size: 2.5rem; font-weight: 900; margin-bottom: 1rem;">Votre prochaine voiture ici ?</h2>
+                    <p style="color: #94a3b8; font-size: 1.1rem; max-width: 500px; margin: 0 auto 2.5rem;">Rejoignez le cercle privilégié de nos clients satisfaits.</p>
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        <a href="/cars" style="background: var(--brand-success); color: white; padding: 1.25rem 2.5rem; border-radius: 1rem; font-weight: 800; text-decoration: none; transition: 0.3s; box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2);">
+                            Explorer le Catalogue
+                        </a>
+                        <a href="/contact" style="background: rgba(255,255,255,0.05); color: white; border: 1px solid rgba(255,255,255,0.1); padding: 1.25rem 2.5rem; border-radius: 1rem; font-weight: 800; text-decoration: none; transition: 0.3s;">
+                            Service Personnalisé
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
